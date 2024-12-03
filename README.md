@@ -1,6 +1,6 @@
 # Design and Control of a DOBOT Magician for Object Suctioning
 
-An Off-policy Reinforcement Learning Algorithm for Optimal Tracking Control Problem
+A robotic manipulator with precise and smooth object handling capabilities.
 
 Full report: [Link](https://drive.google.com/drive/folders/1paShYH4LNmUfNl9dPRv1EbUq-We0ztPf?usp=sharing) 
 ## 1. Introduction
@@ -36,15 +36,49 @@ This project focuses on the design and control of a DOBOT Magician robotic arm f
 
 ## 3. Computation and Validation of Kinematics
 
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/6f5ab98b-e53b-499d-b881-c58709f4b4fc" width="50%" />
 </p>
 <p align="center"> Figure 6. Establishing the Robot's Kinematic Chain and Joint Axes</p>
 
+$$P_x = cos(\theta_1)[L_2 cos(\theta_2 + \theta_3) + L_1 cos(\theta_2)]   (1)$$ 
+
+$$P_y = sin(\theta_1)[L_2 cos(\theta_2 + \theta_3) + L_1 cos(\theta_2)]   (2)$$ 
+
+$$P_z = d_0 + L_2 sin(\theta_2 + \theta_3) + L_1 sin(\theta_2)            (3)$$ 
+
+From (1) (2) (3): 
+
+$$n_x = p_x cos(\theta_1) + p_y sin(\theta_1)$$
+
+$$n_y = p_y cos(\theta_1) - p_x sin(\theta_1)$$
+
+$$n_z = P_z - d_0$$
+
+$$ \rightarrow  \theta_1 = arctan(p_y, p_x)$$
+
+Squaring (1)(2)(3) and adding them together, we get:
+
+$$cos(\theta_3) = \frac{n_x^2 + n_z^2 + L_1^2 + L_2^2}{2L_1L_2}$$
+
+$$sin(\theta_3) = -\sqrt{1 - (cos(\theta_3))^2}$$
+
+$$\rightarrow \theta_3 = acrtan(sin(\theta_3), cos(\theta_3))$$
+
+$$cos(\theta_2) = \frac{n_z L_2 sin(\theta_3) + n_x (L_2 cos(\theta_3) + L_1)}{(L_2 sin(\theta_3))^2 + (L_2 cos(\theta_3) + L_1)^2}$$
+
+$$sin(\theta_2) = \frac{-n_x L_2 sin(\theta_3) + n_z (L_2 cos(\theta_3) + L_1)}{(L_2 sin(\theta_3))^2 + (L_2 cos(\theta_3) + L_1)^2}$$
+
+$$\rightarrow \theta_2 = acrtan(sin(\theta_2), cos(\theta_2))$$
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/b2d99121-80ab-4e21-b98b-0ca3eecab09b" width="50%" />
 </p>
 <p align="center"> Figure 7. Deriving the Denavit-Hartenberg (DH) Parameters</p>
+
+
+
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8ca690c0-ab1c-459a-ad54-24266d033b5e" width="50%" />
@@ -83,14 +117,31 @@ This project focuses on the design and control of a DOBOT Magician robotic arm f
 ## 4. Experrimental Testing
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/a5947a62-cb73-4e02-bd11-48bfb37321a3" width="50%"/>
+  <img src="https://github.com/user-attachments/assets/0da0c26e-4bf5-4340-b010-7cfc9cb99056" width="50%"/>
 </p>
 <p align="center"> Figure 13. Graphical User Interface (GUI) for Robot Control</p>
 
 <p align="center">
+  <img src="https://github.com/user-attachments/assets/e4313e3f-3022-482e-99da-ddb292888205" width="50%"/>
+</p>
+<p align="center"> Figure 14. Graphical User Interface (GUI) for Robot Control</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/05677f42-aca6-48c1-bdf2-92af3bc1fecf" width="50%"/>
+</p>
+<p align="center"> Figure 15. Graphical User Interface (GUI) for Robot Control</p>
+
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/a5947a62-cb73-4e02-bd11-48bfb37321a3" width="50%"/>
+</p>
+<p align="center"> Figure 16. Graphical User Interface (GUI) for Robot Control</p>
+
+
+<p align="center">
   <img src="https://github.com/user-attachments/assets/48db4cf6-ab5e-4261-8641-c55a402b37e7" width="30%" />
 </p>
-<p align="center"> Figure 14. Actual Robot Model</p>
+<p align="center"> Figure 17. Actual Robot Model</p>
 
 ## 5. Conclusion
 
